@@ -54,6 +54,23 @@ main {
     margin-top: 0;
 }
 
+.post-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.post-actions button {
+    background-color: #0047AB; /* Dark blue background */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.post-actions button:hover {
+    background-color: #003580; /* Darker blue on hover */
+}
+
 /* Footer Styles */
 footer {
     background-color: #7393B3; /* Silver background */
