@@ -233,6 +233,14 @@ main {
     background-color: #003580; /* Darker blue on hover */
 }
 
+/* Notification Styles */
+.notification {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
 
 
 /* Footer Styles */
