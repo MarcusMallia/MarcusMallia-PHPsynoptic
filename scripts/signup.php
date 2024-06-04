@@ -1,29 +1,38 @@
-<?php 
-// Include the header template
-include '../templates/header.php'; 
+<?php
+// Include the database connection file
+include 'config.php';
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Hash the password
+    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+
+    // Insert the new user into the database
+    $sql = "INSERT INTO Users (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "New user created successfully.";
+        header("Location: ../login.php");
+        exit();
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    // Close the database connection
+    $conn->close();
+}
 ?>
+
+<?php include '../templates/header.php'; ?>
 
 <!-- Main content section -->
 <main>
     <h2>Signup</h2>
-    <!-- Placeholder for signup form -->
-    <div class="signup-form">
-        <form action="#" method="post">
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" placeholder="Enter your username">
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email">
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password">
-            
-            <button type="submit">Signup</button>
-        </form>
-    </div>
+    <?php include '../templates/signup_form.php'; ?>
 </main>
 
-<?php 
-// Include the footer template
-include '../templates/footer.php'; 
-?>
+<?php include '../templates/footer.php'; ?>
