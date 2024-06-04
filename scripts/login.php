@@ -1,26 +1,49 @@
-<?php 
-// Include the header template
-include '../templates/header.php'; 
+<?php
+// Start the session
+session_start();
+
+// Include the database connection file
+include 'config.php';
+
+// Check if the form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Retrieve form data
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    // Query to select the user with the provided email
+    $sql = "SELECT * FROM Users WHERE email='$email'";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        // Fetch user data
+        $user = $result->fetch_assoc();
+
+        // Verify the password
+        if (password_verify($password, $user['password'])) {
+            // Set session variables
+            $_SESSION['user_id'] = $user['user_id'];
+            $_SESSION['username'] = $user['username'];
+            header("Location: ../index.php");
+            exit();
+        } else {
+            echo "Invalid password.";
+        }
+    } else {
+        echo "No user found with this email.";
+    }
+
+    // Close the database connection
+    $conn->close();
+}
 ?>
+
+<?php include '../templates/header.php'; ?>
 
 <!-- Main content section -->
 <main>
     <h2>Login</h2>
-    <!-- Placeholder for login form -->
-    <div class="login-form">
-        <form action="#" method="post">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email">
-            
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Enter your password">
-            
-            <button type="submit">Login</button>
-        </form>
-    </div>
+    <?php include '../templates/login_form.php'; ?>
 </main>
 
-<?php 
-// Include the footer template
-include '../templates/footer.php'; 
-?>
+<?php include '../templates/footer.php'; ?>
