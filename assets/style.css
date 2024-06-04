@@ -279,6 +279,44 @@ main {
     background-color: #003580; /* Darker blue on hover */
 }
 
+/* Signup Form Styles */
+.signup-form {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.signup-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.signup-form label {
+    font-weight: bold;
+}
+
+.signup-form input[type="text"],
+.signup-form input[type="email"],
+.signup-form input[type="password"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.signup-form button {
+    background-color: #0047AB; /* Dark blue background */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+}
+
+.signup-form button:hover {
+    background-color: #003580; /* Darker blue on hover */
+}
 
 /* Footer Styles */
 footer {
