@@ -407,6 +407,20 @@ form button:hover {
     background-color: #003580;
 }
 
+/* Styles for the delete profile button */
+.delete-button {
+    background-color: #FF6347; 
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.delete-button:hover {
+    background-color: #FF4500; 
+}
+
 
 /* Footer Styles */
 footer {

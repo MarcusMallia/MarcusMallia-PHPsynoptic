@@ -48,6 +48,11 @@ $result_posts = $conn->query($sql_posts);
         <p>Following: <?php echo $following_count; ?></p>
         <p>Posts: <?php echo $post_count; ?></p>
         <a href="update_user.php"><button>Edit Profile</button></a>
+        <!-- Delete Profile Button -->
+        <form action="delete_user.php" method="post" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+            <button type="submit" class="delete-button">Delete Profile</button>
+        </form>
     </div>
     <h2>Your Posts</h2>
     <?php while ($post = $result_posts->fetch_assoc()): ?>
