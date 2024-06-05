@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,22 +10,26 @@
     <script src="/MarcusMallia-PHPsynoptic/assets/validation.js" defer></script>
 </head>
 <body>
-     <!-- Header section -->
+    <!-- Header section -->
     <header>
-        <h1>SpeakeasySounds</h1> 
+        <div class="logo">
+            <h1>SpeakeasySounds</h1>
+        </div>
         <!-- Navigation menu -->
         <nav>
-            
             <ul>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/index.php">Home</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/feed.php">Feed</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/explore.php">Explore</a></li>
-                <li><a href="/MarcusMallia-PHPsynoptic/scripts/profile.php">Profile</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/create_post.php">Create Post</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/notifications.php">Notifications</a></li>
-                <li><a href="/MarcusMallia-PHPsynoptic/scripts/login.php">Login</a></li>
-                <li><a href="/MarcusMallia-PHPsynoptic/scripts/signup.php">Signup</a></li>
-                <li><a href="/MarcusMallia-PHPsynoptic/scripts/logout.php">Logout</a></li>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <li><a href="/MarcusMallia-PHPsynoptic/scripts/profile.php">Profile</a></li>
+                    <li><a href="/MarcusMallia-PHPsynoptic/scripts/logout.php">Logout</a></li>
+                <?php else: ?>
+                    <li><a href="/MarcusMallia-PHPsynoptic/scripts/login.php">Login</a></li>
+                    <li><a href="/MarcusMallia-PHPsynoptic/scripts/signup.php">Signup</a></li>
+                <?php endif; ?>
             </ul>
         </nav>
     </header>

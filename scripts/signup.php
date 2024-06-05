@@ -2,9 +2,6 @@
 // Start the session
 session_start();
 
-// Include the header template
-include '../templates/header.php';
-
 // Include the database connection file
 include 'config.php';
 
@@ -41,12 +38,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+<?php include '../templates/header.php'; ?>
+
 <!-- Main content section -->
 <main>
     <h2>Signup</h2>
-    <!-- Include the signup form template -->
     <?php include '../templates/signup_form.php'; ?>
-    <!-- Display error message if any -->
     <?php if ($error): ?>
         <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
     <?php endif; ?>
