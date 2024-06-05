@@ -1,7 +1,7 @@
 <?php
 // Ensure the database connection is available
 if (!isset($conn)) {
-    include '../scripts/config.php'; 
+    include $_SERVER['DOCUMENT_ROOT'].'/MarcusMallia-PHPsynoptic/scripts/config.php'; 
 }
 
 // Fetch the number of likes for the post
@@ -21,8 +21,8 @@ $is_liked = $result_user_like->num_rows > 0;
 ?>
 
 <div class="post">
-    <h3><a href="post_details.php?post_id=<?php echo $post['post_id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h3>
-    <p>By <a href="user_profile.php?user_id=<?php echo $post['user_id']; ?>"><?php echo htmlspecialchars($post['username']); ?></a></p>
+    <h3><a href="/MarcusMallia-PHPsynoptic/scripts/post_details.php?post_id=<?php echo $post['post_id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h3>
+    <p>By <a href="/MarcusMallia-PHPsynoptic/scripts/user_profile.php?user_id=<?php echo $post['user_id']; ?>"><?php echo htmlspecialchars($post['username']); ?></a></p>
     <p><?php echo htmlspecialchars($post['content']); ?></p>
     <?php if (!empty($post['link'])): ?>
         <p><a href="<?php echo htmlspecialchars($post['link']); ?>" target="_blank">Link</a></p>
@@ -39,7 +39,7 @@ $is_liked = $result_user_like->num_rows > 0;
             <?php endif; ?>
         </form>
         <span><?php echo $like_count; ?> likes</span>
-        <a href="post_details.php?post_id=<?php echo $post['post_id']; ?>"><button>Comment</button></a>
+        <a href="/MarcusMallia-PHPsynoptic/scripts/post_details.php?post_id=<?php echo $post['post_id']; ?>"><button type="button">Comment</button></a>
         <span><?php echo $comment_count; ?> comments</span>
         <?php if ($_SESSION['user_id'] == $post['user_id']): ?>
             <a href="/MarcusMallia-PHPsynoptic/scripts/update_post.php?post_id=<?php echo $post['post_id']; ?>">Edit</a>
