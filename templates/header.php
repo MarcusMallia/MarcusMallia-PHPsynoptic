@@ -15,7 +15,7 @@
         <nav>
             
             <ul>
-                <li><a href="/MarcusMallia-PHPsynoptic/index.php">Home</a></li>
+                <li><a href="/MarcusMallia-PHPsynoptic/scripts/index.php">Home</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/feed.php">Feed</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/explore.php">Explore</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/profile.php">Profile</a></li>
