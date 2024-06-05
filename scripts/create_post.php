@@ -49,16 +49,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<h2>Create a New Post</h2>
-<form action="create_post.php" method="post">
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" required><br>
-    <label for="content">Content:</label>
-    <textarea id="content" name="content" required></textarea><br>
-    <label for="link">Link:</label>
-    <input type="text" id="link" name="link"><br>
-    <label for="tags">Tags (comma separated):</label>
-    <input type="text" id="tags" name="tags"><br>
-    <input type="submit" value="Create Post">
-</form>
+<main class="main-content">
+    <h2>Create a New Post</h2>
+    <form class="create-post-form" action="create_post.php" method="post">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required><br>
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" required></textarea><br>
+        <label for="link">Link:</label>
+        <input type="text" id="link" name="link"><br>
+        <label for="tags">Tags (comma separated):</label>
+        <input type="text" id="tags" name="tags"><br>
+        <input type="submit" value="Create Post">
+    </form>
+</main>
+
 <?php include '../templates/footer.php'; ?>
