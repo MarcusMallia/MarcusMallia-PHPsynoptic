@@ -1,5 +1,5 @@
 <div class="post">
-    <h3><?php echo htmlspecialchars($post['title']); ?></h3>
+    <h3><a href="post_details.php?post_id=<?php echo $post['post_id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h3>
     <p><?php echo htmlspecialchars($post['content']); ?></p>
     <?php if (!empty($post['link'])): ?>
         <p><a href="<?php echo htmlspecialchars($post['link']); ?>" target="_blank">Link</a></p>
