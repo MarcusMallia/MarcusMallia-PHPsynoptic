@@ -1,12 +1,7 @@
 <?php
-// Start the session
 session_start();
-
-// Unset all session variables
-$_SESSION = array();
-
-// Destroy the session
+session_unset();
 session_destroy();
-
-echo "You have been logged out.";
+header("Location: ../scripts/login.php");
+exit();
 ?>

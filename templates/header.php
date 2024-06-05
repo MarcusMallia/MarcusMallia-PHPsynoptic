@@ -7,11 +7,12 @@
     <link rel="stylesheet" href="/MarcusMallia-PHPsynoptic/assets/style.css">
 </head>
 <body>
-    <!-- Header section -->
+     <!-- Header section -->
     <header>
-        <h1>SpeakeasySounds</h1>
+        <h1>SpeakeasySounds</h1> 
         <!-- Navigation menu -->
         <nav>
+            
             <ul>
                 <li><a href="/MarcusMallia-PHPsynoptic/index.php">Home</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/feed.php">Feed</a></li>
@@ -21,6 +22,7 @@
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/notifications.php">Notifications</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/login.php">Login</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/signup.php">Signup</a></li>
+                <li><a href="/MarcusMallia-PHPsynoptic/scripts/logout.php">Logout</a></li>
             </ul>
         </nav>
     </header>
