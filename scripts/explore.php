@@ -40,62 +40,72 @@ function is_following($current_user_id, $user_id, $conn) {
 $current_user_id = $_SESSION['user_id'];
 ?>
 
-<main>
-    <h2>Explore</h2>
-    <!-- Search bar -->
-    <div class="search-bar">
-        <form action="explore.php" method="post">
-            <input type="text" name="search_query" placeholder="Search for posts or users..." value="<?php echo htmlspecialchars($search_query); ?>">
-            <button type="submit">Search</button>
-        </form>
-    </div>
+<div class="main-content">
+    <main>
+        <h2>Explore</h2>
+        <!-- Search bar -->
+        <div class="search-bar">
+            <form action="explore.php" method="post">
+                <input type="text" name="search_query" placeholder="Search for posts or users..." value="<?php echo htmlspecialchars($search_query); ?>">
+                <button type="submit">Search</button>
+            </form>
+        </div>
 
-    <?php if (empty($search_query)): ?>
-        <!-- Display new posts when search is blank -->
-        <h3>New Posts</h3>
-        <?php while ($post = $result_new_posts->fetch_assoc()): ?>
-            <?php include '../templates/post.php'; ?>
-        <?php endwhile; ?>
-
-        <!-- Display new users when search is blank -->
-        <h3>New Users</h3>
-        <?php while ($user = $result_new_users->fetch_assoc()): ?>
-            <div class="user">
-                <h4><a href="user_profile.php?user_id=<?php echo $user['user_id']; ?>"><?php echo htmlspecialchars($user['username']); ?></a></h4>
-                <form class="follow-form" data-user-id="<?php echo $user['user_id']; ?>">
-                    <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                    <?php if (is_following($current_user_id, $user['user_id'], $conn)): ?>
-                        <button type="submit" name="action" value="unfollow">Unfollow</button>
-                    <?php else: ?>
-                        <button type="submit" name="action" value="follow">Follow</button>
-                    <?php endif; ?>
-                </form>
+        <?php if (empty($search_query)): ?>
+            <!-- Display new posts when search is blank -->
+            <h3>New Posts</h3>
+            <div class="post-container">
+                <?php while ($post = $result_new_posts->fetch_assoc()): ?>
+                    <?php include '../templates/post.php'; ?>
+                <?php endwhile; ?>
             </div>
-        <?php endwhile; ?>
-    <?php else: ?>
-        <!-- Display search results for posts -->
-        <h3>Search Results for Posts</h3>
-        <?php while ($post = $result_search_posts->fetch_assoc()): ?>
-            <?php include '../templates/post.php'; ?>
-        <?php endwhile; ?>
 
-        <!-- Display search results for users -->
-        <h3>Search Results for Users</h3>
-        <?php while ($user = $result_search_users->fetch_assoc()): ?>
-            <div class="user">
-                <h4><a href="user_profile.php?user_id=<?php echo $user['user_id']; ?>"><?php echo htmlspecialchars($user['username']); ?></a></h4>
-                <form class="follow-form" data-user-id="<?php echo $user['user_id']; ?>">
-                    <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
-                    <?php if (is_following($current_user_id, $user['user_id'], $conn)): ?>
-                        <button type="submit" name="action" value="unfollow">Unfollow</button>
-                    <?php else: ?>
-                        <button type="submit" name="action" value="follow">Follow</button>
-                    <?php endif; ?>
-                </form>
+            <!-- Display new users when search is blank -->
+            <h3>New Users</h3>
+            <div class="user-container">
+                <?php while ($user = $result_new_users->fetch_assoc()): ?>
+                    <div class="user">
+                        <h4><a href="user_profile.php?user_id=<?php echo $user['user_id']; ?>"><?php echo htmlspecialchars($user['username']); ?></a></h4>
+                        <form class="follow-form" data-user-id="<?php echo $user['user_id']; ?>">
+                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                            <?php if (is_following($current_user_id, $user['user_id'], $conn)): ?>
+                                <button type="submit" name="action" value="unfollow">Unfollow</button>
+                            <?php else: ?>
+                                <button type="submit" name="action" value="follow">Follow</button>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                <?php endwhile; ?>
             </div>
-        <?php endwhile; ?>
-    <?php endif; ?>
-</main>
+        <?php else: ?>
+            <!-- Display search results for posts -->
+            <h3>Search Results for Posts</h3>
+            <div class="post-container">
+                <?php while ($post = $result_search_posts->fetch_assoc()): ?>
+                    <?php include '../templates/post.php'; ?>
+                <?php endwhile; ?>
+            </div>
+
+            <!-- Display search results for users -->
+            <h3>Search Results for Users</h3>
+            <div class="user-container">
+                <?php while ($user = $result_search_users->fetch_assoc()): ?>
+                    <div class="user">
+                        <h4><a href="user_profile.php?user_id=<?php echo $user['user_id']; ?>"><?php echo htmlspecialchars($user['username']); ?></a></h4>
+                        <form class="follow-form" data-user-id="<?php echo $user['user_id']; ?>">
+                            <input type="hidden" name="user_id" value="<?php echo $user['user_id']; ?>">
+                            <?php if (is_following($current_user_id, $user['user_id'], $conn)): ?>
+                                <button type="submit" name="action" value="unfollow">Unfollow</button>
+                            <?php else: ?>
+                                <button type="submit" name="action" value="follow">Follow</button>
+                            <?php endif; ?>
+                        </form>
+                    </div>
+                <?php endwhile; ?>
+            </div>
+        <?php endif; ?>
+    </main>
+</div>
 
 <?php 
 include '../templates/footer.php'; 
