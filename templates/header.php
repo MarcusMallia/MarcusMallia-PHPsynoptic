@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SpeakeasySounds</title>
     <link rel="stylesheet" href="/MarcusMallia-PHPsynoptic/assets/style.css">
+    <script src="/MarcusMallia-PHPsynoptic/assets/follow.js" defer></script>
 </head>
 <body>
      <!-- Header section -->

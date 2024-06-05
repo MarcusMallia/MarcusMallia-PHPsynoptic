@@ -31,10 +31,14 @@ if ($result_user->num_rows > 0) {
     exit();
 }
 
-// Check if the current user is following this user
-$sql_follow = "SELECT * FROM Followers WHERE follower_user_id = '$current_user_id' AND user_id = '$user_id'";
-$result_follow = $conn->query($sql_follow);
-$is_following = $result_follow->num_rows > 0;
+// Function to check if the current user is following this user
+function is_following($current_user_id, $user_id, $conn) {
+    $sql = "SELECT * FROM Followers WHERE follower_user_id = '$current_user_id' AND user_id = '$user_id'";
+    $result = $conn->query($sql);
+    return $result->num_rows > 0;
+}
+
+$is_following = is_following($current_user_id, $user_id, $conn);
 
 // Fetch user-specific posts
 $sql_posts = "SELECT Posts.*, Users.username FROM Posts INNER JOIN Users ON Posts.user_id = Users.user_id WHERE Posts.user_id = '$user_id' ORDER BY Posts.created_at DESC";
@@ -46,15 +50,21 @@ $result_posts = $conn->query($sql_posts);
     <div class="profile-info">
         <p>Username: <?php echo htmlspecialchars($user['username']); ?></p>
         <p>Email: <?php echo htmlspecialchars($user['email']); ?></p>
-        <form action="follow_action.php" method="post">
-            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-            <?php if ($is_following): ?>
-                <button type="submit" name="action" value="unfollow">Unfollow</button>
-            <?php else: ?>
-                <button type="submit" name="action" value="follow">Follow</button>
-            <?php endif; ?>
-        </form>
+        <p>Joined: <?php echo htmlspecialchars($user['created_at']); ?></p>
+
+        <!-- Follow/Unfollow button -->
+        <?php if ($current_user_id != $user_id): ?>
+            <form class="follow-form" data-user-id="<?php echo $user_id; ?>">
+                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                <?php if ($is_following): ?>
+                    <button type="submit" name="action" value="unfollow">Unfollow</button>
+                <?php else: ?>
+                    <button type="submit" name="action" value="follow">Follow</button>
+                <?php endif; ?>
+            </form>
+        <?php endif; ?>
     </div>
+
     <h2>Posts by <?php echo htmlspecialchars($user['username']); ?></h2>
     <?php while ($post = $result_posts->fetch_assoc()): ?>
         <?php include '../templates/post.php'; ?>
@@ -65,3 +75,4 @@ $result_posts = $conn->query($sql_posts);
 include '../templates/footer.php'; 
 $conn->close();
 ?>
+<script src="/MarcusMallia-PHPsynoptic/assets/follow.js" defer></script>
