@@ -58,34 +58,41 @@ $sql_posts = "SELECT Posts.*, Users.username FROM Posts INNER JOIN Users ON Post
 $result_posts = $conn->query($sql_posts);
 ?>
 
-<main>
-    <h2><?php echo htmlspecialchars($user['username']); ?>'s Profile</h2>
-    <div class="profile-info">
-        <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture" class="profile-picture">
-        <h3><?php echo htmlspecialchars($user['username']); ?></h3>
-        <p><?php echo htmlspecialchars($user['email']); ?></p>
-        <p><?php echo htmlspecialchars($user['bio']); ?></p>
-        <p>Followers: <?php echo $follower_count; ?></p>
-        <p>Following: <?php echo $following_count; ?></p>
-        <p>Posts: <?php echo $post_count; ?></p>
+<main class="main-content">
+    <div class="profile-header">
+        <div class="profile-picture-container">
+            <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture" class="profile-picture">
+        </div>
+        <div class="profile-info">
+            <h3><?php echo htmlspecialchars($user['username']); ?></h3>
+            <p><?php echo htmlspecialchars($user['email']); ?></p>
+            <p><?php echo htmlspecialchars($user['bio']); ?></p>
+            <p>Followers: <?php echo $follower_count; ?></p>
+            <p>Following: <?php echo $following_count; ?></p>
+            <p>Posts: <?php echo $post_count; ?></p>
 
-        <!-- Follow/Unfollow button -->
-        <?php if ($current_user_id != $user_id): ?>
-            <form class="follow-form" data-user-id="<?php echo $user_id; ?>">
-                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-                <?php if (is_following($current_user_id, $user_id, $conn)): ?>
-                    <button type="submit" name="action" value="unfollow">Unfollow</button>
-                <?php else: ?>
-                    <button type="submit" name="action" value="follow">Follow</button>
-                <?php endif; ?>
-            </form>
-        <?php endif; ?>
+            <!-- Follow/Unfollow button -->
+            <?php if ($current_user_id != $user_id): ?>
+                <form class="follow-form" data-user-id="<?php echo $user_id; ?>">
+                    <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                    <?php if (is_following($current_user_id, $user_id, $conn)): ?>
+                        <button type="submit" name="action" value="unfollow">Unfollow</button>
+                    <?php else: ?>
+                        <button type="submit" name="action" value="follow">Follow</button>
+                    <?php endif; ?>
+                </form>
+            <?php endif; ?>
+        </div>
     </div>
 
-    <h2>Posts by <?php echo htmlspecialchars($user['username']); ?></h2>
-    <?php while ($post = $result_posts->fetch_assoc()): ?>
-        <?php include '../templates/post.php'; ?>
-    <?php endwhile; ?>
+    <div class="profile-posts">
+        <h2>Posts by <?php echo htmlspecialchars($user['username']); ?></h2>
+        <div class="post-container">
+            <?php while ($post = $result_posts->fetch_assoc()): ?>
+                <?php include '../templates/post.php'; ?>
+            <?php endwhile; ?>
+        </div>
+    </div>
 </main>
 
 <?php 
