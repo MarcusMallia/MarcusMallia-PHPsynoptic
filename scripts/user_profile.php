@@ -16,6 +16,7 @@ if (!isset($_GET['user_id'])) {
     exit();
 }
 
+$current_user_id = $_SESSION['user_id'];
 $user_id = $_GET['user_id'];
 
 // Fetch user information
@@ -30,6 +31,11 @@ if ($result_user->num_rows > 0) {
     exit();
 }
 
+// Check if the current user is following this user
+$sql_follow = "SELECT * FROM Followers WHERE follower_user_id = '$current_user_id' AND user_id = '$user_id'";
+$result_follow = $conn->query($sql_follow);
+$is_following = $result_follow->num_rows > 0;
+
 // Fetch user-specific posts
 $sql_posts = "SELECT Posts.*, Users.username FROM Posts INNER JOIN Users ON Posts.user_id = Users.user_id WHERE Posts.user_id = '$user_id' ORDER BY Posts.created_at DESC";
 $result_posts = $conn->query($sql_posts);
@@ -40,27 +46,18 @@ $result_posts = $conn->query($sql_posts);
     <div class="profile-info">
         <p>Username: <?php echo htmlspecialchars($user['username']); ?></p>
         <p>Email: <?php echo htmlspecialchars($user['email']); ?></p>
-        <button>Follow</button> <!-- Add follow/unfollow functionality here -->
+        <form action="follow_action.php" method="post">
+            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+            <?php if ($is_following): ?>
+                <button type="submit" name="action" value="unfollow">Unfollow</button>
+            <?php else: ?>
+                <button type="submit" name="action" value="follow">Follow</button>
+            <?php endif; ?>
+        </form>
     </div>
     <h2>Posts by <?php echo htmlspecialchars($user['username']); ?></h2>
     <?php while ($post = $result_posts->fetch_assoc()): ?>
-        <div class="post">
-            <h3><a href="post_details.php?post_id=<?php echo $post['post_id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h3>
-            <p>by <a href="user_profile.php?user_id=<?php echo $post['user_id']; ?>"><?php echo htmlspecialchars($post['username']); ?></a></p>
-            <p><?php echo htmlspecialchars($post['content']); ?></p>
-            <?php if (!empty($post['link'])): ?>
-                <p><a href="<?php echo htmlspecialchars($post['link']); ?>" target="_blank">Link</a></p>
-            <?php endif; ?>
-            <p>Tags: <?php echo htmlspecialchars($post['tags']); ?></p>
-            <div class="post-actions">
-                <button>Like</button>
-                <button>Comment</button>
-                <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $post['user_id']): ?>
-                    <a href="update_post.php?post_id=<?php echo $post['post_id']; ?>">Edit</a>
-                    <a href="delete_post.php?post_id=<?php echo $post['post_id']; ?>" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
-                <?php endif; ?>
-            </div>
-        </div>
+        <?php include '../templates/post.php'; ?>
     <?php endwhile; ?>
 </main>
 
