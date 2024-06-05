@@ -37,10 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 ?>
 
 <?php include '../templates/header.php'; ?>
-<main>
+<main class="main-content">
     <h2>Update Comment</h2>
-    <form action="update_comment.php?comment_id=<?php echo $comment_id; ?>&post_id=<?php echo $post_id; ?>" method="post">
-        <textarea name="content" required><?php echo htmlspecialchars($comment['content']); ?></textarea>
+    <form action="update_comment.php?comment_id=<?php echo $comment_id; ?>&post_id=<?php echo $post_id; ?>" method="post" class="comment-form">
+        <div class="form-group">
+            <textarea name="content" required><?php echo htmlspecialchars($comment['content']); ?></textarea>
+        </div>
         <button type="submit">Update Comment</button>
     </form>
 </main>
