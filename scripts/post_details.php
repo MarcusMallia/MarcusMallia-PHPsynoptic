@@ -29,7 +29,7 @@ $sql_tags = "SELECT tags.name FROM tags INNER JOIN post_tags ON tags.tag_id = po
 $result_tags = $conn->query($sql_tags);
 ?>
 
-<main>
+<main class="main-content">
     <h2>Post Details</h2>
     <div class="post">
         <h3><?php echo htmlspecialchars($post['title']); ?></h3>

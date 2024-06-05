@@ -362,6 +362,50 @@ h2, h3 {
     text-decoration: underline;
 }
 
+/* Comments */
+.comment {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+}
+
+.comment p {
+    margin: 0;
+}
+
+.add-comment {
+    margin-top: 2rem;
+}
+
+.add-comment form {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-comment textarea {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    resize: none;
+    margin-bottom: 1rem;
+}
+
+.add-comment button {
+    background-color: #0047AB;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    border-radius: 4px;
+    align-self: flex-end;
+}
+
+.add-comment button:hover {
+    background-color: #003580;
+}
+
 h2, h3 {
     font-family: 'Georgia', serif; /* Serif font for headings */
 }
