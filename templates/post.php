@@ -49,9 +49,9 @@ $is_liked = $result_user_like->num_rows > 0;
             $is_liked = $result_is_liked->num_rows > 0;
             ?>
             <?php if ($is_liked): ?>
-                <button type="submit" name="action" value="unlike">Unlike</button>
+                <button type="submit" name="action" value="unlike"><i class="fas fa-thumbs-down"></i> Unlike</button>
             <?php else: ?>
-                <button type="submit" name="action" value="like">Like</button>
+                <button type="submit" name="action" value="like"><i class="fas fa-thumbs-up"></i> Like</button>
             <?php endif; ?>
         </form>
         <?php
@@ -61,7 +61,7 @@ $is_liked = $result_user_like->num_rows > 0;
         $like_count = $result_like_count->fetch_assoc()['like_count'];
         ?>
         <span><?php echo $like_count; ?> likes</span>
-        <a href="/MarcusMallia-PHPsynoptic/scripts/post_details.php?post_id=<?php echo $post['post_id']; ?>"><button type="button">Comment</button></a>
+        <a href="/MarcusMallia-PHPsynoptic/scripts/post_details.php?post_id=<?php echo $post['post_id']; ?>"><button type="button"><i class="fas fa-comment"></i> Comment</button></a>
         <?php
         // Fetch comment count
         $sql_comment_count = "SELECT COUNT(*) AS comment_count FROM Comments WHERE post_id = '".$post['post_id']."'";
@@ -70,9 +70,8 @@ $is_liked = $result_user_like->num_rows > 0;
         ?>
         <span><?php echo $comment_count; ?> comments</span>
         <?php if ($_SESSION['user_id'] == $post['user_id']): ?>
-            <a href="/MarcusMallia-PHPsynoptic/scripts/update_post.php?post_id=<?php echo $post['post_id']; ?>">Edit</a>
-            <a href="/MarcusMallia-PHPsynoptic/scripts/delete_post.php?post_id=<?php echo $post['post_id']; ?>" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
+            <a href="/MarcusMallia-PHPsynoptic/scripts/update_post.php?post_id=<?php echo $post['post_id']; ?>"><i class="fas fa-edit"></i> Edit</a>
+            <a href="/MarcusMallia-PHPsynoptic/scripts/delete_post.php?post_id=<?php echo $post['post_id']; ?>" onclick="return confirm('Are you sure you want to delete this post?');"><i class="fas fa-trash-alt"></i> Delete</a>
         <?php endif; ?>
     </div>
 </div>
-

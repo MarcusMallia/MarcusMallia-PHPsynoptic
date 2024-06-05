@@ -42,6 +42,10 @@ nav ul li a {
     font-weight: bold;
 }
 
+/* Icon Styles */
+.fa {
+    margin-right: 5px;
+}
 
 /* Main Content Styles */
 main {
