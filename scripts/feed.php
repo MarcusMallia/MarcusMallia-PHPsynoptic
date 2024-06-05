@@ -1,7 +1,7 @@
 <?php 
 session_start();
-include '../templates/header.php'; 
-include 'config.php'; 
+include '../templates/header.php'; // Adjusted path
+include 'config.php';              // Adjusted path
 
 // Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
@@ -15,12 +15,16 @@ $sql = "SELECT Posts.*, Users.username FROM Posts INNER JOIN Users ON Posts.user
 $result = $conn->query($sql);
 ?>
 
-<main>
-    <h2>Feed</h2>
-    <?php while ($post = $result->fetch_assoc()): ?>
-        <?php include '../templates/post.php'; ?>
-    <?php endwhile; ?>
-</main>
+<div class="main-content">
+    <main>
+        <h2>Feed</h2>
+        <div class="post-container">
+            <?php while ($post = $result->fetch_assoc()): ?>
+                <?php include '../templates/post.php'; ?>
+            <?php endwhile; ?>
+        </div>
+    </main>
+</div>
 
 <?php 
 include '../templates/footer.php'; 
