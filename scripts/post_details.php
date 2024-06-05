@@ -3,7 +3,6 @@ session_start();
 include '../templates/header.php'; 
 include 'config.php'; 
 
-// Check if the post ID is provided
 if (!isset($_GET['post_id'])) {
     echo "No post ID provided.";
     include '../templates/footer.php';
@@ -12,7 +11,6 @@ if (!isset($_GET['post_id'])) {
 
 $post_id = $_GET['post_id'];
 
-// Fetch the post details
 $sql_post = "SELECT * FROM Posts WHERE post_id = '$post_id'";
 $result_post = $conn->query($sql_post);
 
@@ -24,9 +22,11 @@ if ($result_post->num_rows > 0) {
     exit();
 }
 
-// Fetch the comments for the post with user information
 $sql_comments = "SELECT Comments.*, Users.username FROM Comments INNER JOIN Users ON Comments.user_id = Users.user_id WHERE Comments.post_id = '$post_id' ORDER BY Comments.created_at DESC";
 $result_comments = $conn->query($sql_comments);
+
+$sql_tags = "SELECT tags.name FROM tags INNER JOIN post_tags ON tags.tag_id = post_tags.tag_id WHERE post_tags.post_id = '$post_id'";
+$result_tags = $conn->query($sql_tags);
 ?>
 
 <main>
@@ -37,11 +37,11 @@ $result_comments = $conn->query($sql_comments);
         <?php if (!empty($post['link'])): ?>
             <p><a href="<?php echo htmlspecialchars($post['link']); ?>" target="_blank">Link</a></p>
         <?php endif; ?>
-        <p>Tags: <?php echo htmlspecialchars($post['tags']); ?></p>
-        <div class="post-actions">
-            <button>Like</button>
-            <button>Comment</button>
-        </div>
+        <p>Tags: 
+            <?php while ($tag = $result_tags->fetch_assoc()): ?>
+                <?php echo htmlspecialchars($tag['name']) . ' '; ?>
+            <?php endwhile; ?>
+        </p>
     </div>
     <h3>Comments</h3>
     <?php while ($comment = $result_comments->fetch_assoc()): ?>

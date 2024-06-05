@@ -3,7 +3,6 @@ session_start();
 include '../templates/header.php'; 
 include 'config.php'; 
 
-// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
     echo "You need to log in to create a post.";
     include '../templates/footer.php';
@@ -12,47 +11,54 @@ if (!isset($_SESSION['user_id'])) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_SESSION['user_id'];
-    $title = $_POST['post-title'];
-    $content = $_POST['post-content'];
-    $link = $_POST['post-link'];
-    $tags = $_POST['post-tags'];
+    $title = $_POST['title'];
+    $content = $_POST['content'];
+    $link = $_POST['link'];
+    $tags = explode(',', $_POST['tags']);
 
     // Insert the new post into the database
-    $sql = "INSERT INTO Posts (user_id, title, content, link, tags) VALUES ('$user_id', '$title', '$content', '$link', '$tags')";
-
+    $sql = "INSERT INTO Posts (user_id, title, content, link) VALUES ('$user_id', '$title', '$content', '$link')";
     if ($conn->query($sql) === TRUE) {
-        header("Location: feed.php");
-        exit();
+        $post_id = $conn->insert_id;
+
+        // Insert tags
+        foreach ($tags as $tag_name) {
+            $tag_name = trim($tag_name);
+            $sql_tag = "SELECT tag_id FROM tags WHERE name='$tag_name'";
+            $result_tag = $conn->query($sql_tag);
+
+            if ($result_tag->num_rows > 0) {
+                $tag = $result_tag->fetch_assoc();
+                $tag_id = $tag['tag_id'];
+            } else {
+                $sql_insert_tag = "INSERT INTO tags (name) VALUES ('$tag_name')";
+                $conn->query($sql_insert_tag);
+                $tag_id = $conn->insert_id;
+            }
+
+            $sql_post_tag = "INSERT INTO post_tags (post_id, tag_id) VALUES ('$post_id', '$tag_id')";
+            $conn->query($sql_post_tag);
+        }
+
+        echo "New post created successfully.";
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
     }
 
-    // Close the database connection
     $conn->close();
 }
 ?>
 
-<main>
-    <h2>Create Post</h2>
-    <div class="create-post-form">
-        <form action="create_post.php" method="post">
-            <label for="post-title">Post Title:</label>
-            <input type="text" id="post-title" name="post-title" placeholder="Enter post title" required>
-            
-            <label for="post-content">Post Content:</label>
-            <textarea id="post-content" name="post-content" placeholder="Write your post..." required></textarea>
-            
-            <label for="post-link">Link:</label>
-            <input type="url" id="post-link" name="post-link" placeholder="Enter URL (optional)">
-            
-            <label for="post-tags">Tags:</label>
-            <input type="text" id="post-tags" name="post-tags" placeholder="Enter tags separated by commas">
-            
-            <button type="submit">Create Post</button>
-        </form>
-    </div>
-</main>
-
-<?php 
-include '../templates/footer.php'; 
-?>
+<h2>Create a New Post</h2>
+<form action="create_post.php" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required><br>
+    <label for="content">Content:</label>
+    <textarea id="content" name="content" required></textarea><br>
+    <label for="link">Link:</label>
+    <input type="text" id="link" name="link"><br>
+    <label for="tags">Tags (comma separated):</label>
+    <input type="text" id="tags" name="tags"><br>
+    <input type="submit" value="Create Post">
+</form>
+<?php include '../templates/footer.php'; ?>

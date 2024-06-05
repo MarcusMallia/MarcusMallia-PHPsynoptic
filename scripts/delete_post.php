@@ -1,14 +1,12 @@
-<?php
+<?php 
 session_start();
 include 'config.php'; 
 
-// Check if the user is logged in
 if (!isset($_SESSION['user_id'])) {
-    echo "You need to log in to delete a post.";
+    header("Location: login.php");
     exit();
 }
 
-// Check if the post ID is provided
 if (!isset($_GET['post_id'])) {
     echo "No post ID provided.";
     exit();
@@ -16,14 +14,17 @@ if (!isset($_GET['post_id'])) {
 
 $post_id = $_GET['post_id'];
 
-// Delete the post from the database
-$sql = "DELETE FROM Posts WHERE post_id = '$post_id' AND user_id = '".$_SESSION['user_id']."'";
+// Delete the post and its associated tags
+$sql_delete_post_tags = "DELETE FROM post_tags WHERE post_id='$post_id'";
+$conn->query($sql_delete_post_tags);
 
-if ($conn->query($sql) === TRUE) {
+$sql_delete_post = "DELETE FROM Posts WHERE post_id='$post_id' AND user_id='".$_SESSION['user_id']."'";
+if ($conn->query($sql_delete_post) === TRUE) {
+    echo "Post deleted successfully.";
     header("Location: feed.php");
     exit();
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Error deleting post: " . $conn->error;
 }
 
 $conn->close();
