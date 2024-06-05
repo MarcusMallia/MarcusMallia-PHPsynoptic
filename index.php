@@ -1,23 +1,46 @@
 <?php 
-// Include the header template
+session_start();
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: scripts/login.php");
+    exit();
+}
+
 include 'templates/header.php'; 
+include 'scripts/config.php'; 
+
+// Fetch the latest posts
+$sql = "SELECT * FROM Posts ORDER BY created_at DESC LIMIT 10";
+$result = $conn->query($sql);
 ?>
 
-<!-- Main content section -->
 <main>
-    <h2>Latest Posts</h2>
-    <!-- Placeholder for the latest posts -->
-    <div class="post">
-        <h3>Post Title</h3>
-        <p>Post content goes here...</p>
-    </div>
-    <div class="post">
-        <h3>Post Title</h3>
-        <p>Post content goes here...</p>
-    </div>
+    <h2>Welcome to SpeakeasySounds</h2>
+    <p>Share your musical experiences and connect with other music enthusiasts.</p>
+
+    <h3>Latest Posts</h3>
+    <?php while ($post = $result->fetch_assoc()): ?>
+        <div class="post">
+            <h4><a href="scripts/post_details.php?post_id=<?php echo $post['post_id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h4>
+            <p><?php echo htmlspecialchars($post['content']); ?></p>
+            <?php if (!empty($post['link'])): ?>
+                <p><a href="<?php echo htmlspecialchars($post['link']); ?>" target="_blank">Link</a></p>
+            <?php endif; ?>
+            <p>Tags: <?php echo htmlspecialchars($post['tags']); ?></p>
+            <div class="post-actions">
+                <button>Like</button>
+                <button>Comment</button>
+                <?php if ($_SESSION['user_id'] == $post['user_id']): ?>
+                    <a href="scripts/update_post.php?post_id=<?php echo $post['post_id']; ?>">Edit</a>
+                    <a href="scripts/delete_post.php?post_id=<?php echo $post['post_id']; ?>" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
+                <?php endif; ?>
+            </div>
+        </div>
+    <?php endwhile; ?>
 </main>
 
 <?php 
-// Include the footer template
 include 'templates/footer.php'; 
+$conn->close();
 ?>
