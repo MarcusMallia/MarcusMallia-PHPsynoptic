@@ -6,6 +6,7 @@
     <title>SpeakeasySounds</title>
     <link rel="stylesheet" href="/MarcusMallia-PHPsynoptic/assets/style.css">
     <script src="/MarcusMallia-PHPsynoptic/assets/follow.js" defer></script>
+    <script src="/MarcusMallia-PHPsynoptic/assets/validation.js" defer></script>
 </head>
 <body>
      <!-- Header section -->

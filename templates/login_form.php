@@ -1,11 +1,13 @@
-<div class="login-form">
-    <form action="login.php" method="post">
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" placeholder="Enter your email" required>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-        
-        <button type="submit">Login</button>
-    </form>
-</div>
+<!-- Login form -->
+<form id="login-form" action="login.php" method="post">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required>
+    <div id="email-error" class="error-message"></div>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+    <div id="password-error" class="error-message"></div>
+
+    <button type="submit">Login</button>
+</form>
+<div id="form-error" class="error-message"></div>
