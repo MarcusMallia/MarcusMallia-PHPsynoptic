@@ -40,38 +40,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SpeakeasySounds</title>
-    <link rel="stylesheet" href="/MarcusMallia-PHPsynoptic/assets/style.css">
-</head>
-<body>
+<?php include '../templates/header.php'; ?>
+
+<!-- Main content section -->
+<main class="login-main">
     <div class="login-container">
         <div class="login-form-container">
+            <h2>Login</h2>
             <form id="login-form" action="login.php" method="post">
-                <h2>Login</h2>
                 <div class="input-group">
-                    <input type="email" id="email" name="email" placeholder="Email address" required>
-                    <div id="email-error" class="error-message"></div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
                 </div>
                 <div class="input-group">
-                    <input type="password" id="password" name="password" placeholder="Password" required>
-                    <div id="password-error" class="error-message"></div>
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
                 </div>
                 <button type="submit">Login</button>
-                <p>Don't have an account? <a href="signup.php">Sign up</a></p>
             </form>
             <?php if ($error): ?>
                 <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
             <?php endif; ?>
+            <p>Don't have an account? <a href="signup.php">Sign up</a></p>
         </div>
         <div class="login-message-container">
             <h2>Welcome to SpeakeasySounds</h2>
             <p>Share your musical experiences and connect with other music enthusiasts.</p>
         </div>
     </div>
-</body>
-</html>
+</main>
+
+<?php include '../templates/footer.php'; ?>
