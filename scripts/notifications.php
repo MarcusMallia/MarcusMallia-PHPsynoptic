@@ -1,21 +1,38 @@
 <?php 
-// Include the header template
+session_start();
 include '../templates/header.php'; 
+include 'config.php'; 
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: login.php");
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Fetch notifications for the logged-in user
+$sql = "SELECT * FROM Notifications WHERE user_id = '$user_id' ORDER BY created_at DESC";
+$result = $conn->query($sql);
 ?>
 
-<!-- Main content section -->
 <main>
     <h2>Notifications</h2>
-    <!-- Placeholder for notifications list -->
-    <div class="notification">
-        <p><strong>Notification Title</strong>: Notification content goes here...</p>
-    </div>
-    <div class="notification">
-        <p><strong>Notification Title</strong>: Notification content goes here...</p>
-    </div>
+    <?php while ($notification = $result->fetch_assoc()): ?>
+        <div class="notification">
+            <p><?php echo htmlspecialchars($notification['message']); ?></p>
+            <p><small><?php echo htmlspecialchars($notification['created_at']); ?></small></p>
+            <?php if (!$notification['is_read']): ?>
+                <form action="mark_notification.php" method="post">
+                    <input type="hidden" name="notification_id" value="<?php echo $notification['notification_id']; ?>">
+                    <button type="submit">Mark as Read</button>
+                </form>
+            <?php endif; ?>
+        </div>
+    <?php endwhile; ?>
 </main>
 
 <?php 
-// Include the footer template
 include '../templates/footer.php'; 
+$conn->close();
 ?>

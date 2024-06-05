@@ -12,10 +12,19 @@ $follower_user_id = $_SESSION['user_id'];
 $user_id = $_POST['user_id'];
 $action = $_POST['action'];
 
+// Fetch the follower username
+$sql_follower = "SELECT username FROM Users WHERE user_id = '$follower_user_id'";
+$result_follower = $conn->query($sql_follower);
+$follower_username = $result_follower->fetch_assoc()['username'];
+
 if ($action == 'follow') {
     // Insert a new follow relationship
     $sql = "INSERT INTO Followers (follower_user_id, user_id) VALUES ('$follower_user_id', '$user_id')";
     if ($conn->query($sql) === TRUE) {
+        // Generate notification for the followed user
+        $notification_message = "$follower_username followed you.";
+        $sql_notification = "INSERT INTO Notifications (user_id, type, message) VALUES ('$user_id', 'follow', '$notification_message')";
+        $conn->query($sql_notification);
         echo "Followed successfully.";
     } else {
         echo "Error: " . $conn->error;
