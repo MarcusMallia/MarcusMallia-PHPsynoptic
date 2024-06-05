@@ -47,6 +47,10 @@ $result_comments = $conn->query($sql_comments);
     <?php while ($comment = $result_comments->fetch_assoc()): ?>
         <div class="comment">
             <p><strong><?php echo htmlspecialchars($comment['username']); ?>:</strong> <?php echo htmlspecialchars($comment['content']); ?></p>
+            <?php if ($comment['user_id'] == $_SESSION['user_id']): ?>
+                <a href="update_comment.php?comment_id=<?php echo $comment['comment_id']; ?>&post_id=<?php echo $post_id; ?>">Update</a>
+                <a href="delete_comment.php?comment_id=<?php echo $comment['comment_id']; ?>&post_id=<?php echo $post_id; ?>" onclick="return confirm('Are you sure you want to delete this comment?');">Delete</a>
+            <?php endif; ?>
         </div>
     <?php endwhile; ?>
     <div class="add-comment">
