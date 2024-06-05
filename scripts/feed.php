@@ -1,32 +1,28 @@
 <?php 
-// Include the header template
+session_start();
 include '../templates/header.php'; 
+include 'config.php'; 
+
+// Check if the user is logged in
+if (!isset($_SESSION['user_id'])) {
+    echo "You need to log in to view the feed.";
+    include '../templates/footer.php';
+    exit();
+}
+
+// Fetch all posts from the database
+$sql = "SELECT * FROM Posts ORDER BY created_at DESC";
+$result = $conn->query($sql);
 ?>
 
-<!-- Main content section -->
 <main>
     <h2>Feed</h2>
-    <!-- Placeholder for user feed posts -->
-    <div class="post">
-        <h3>User Post Title</h3>
-        <p>User post content goes here...</p>
-        <!-- Placeholder for like and comment buttons -->
-        <div class="post-actions">
-            <button>Like</button>
-            <button>Comment</button>
-        </div>
-    </div>
-    <div class="post">
-        <h3>User Post Title</h3>
-        <p>User post content goes here...</p>
-        <div class="post-actions">
-            <button>Like</button>
-            <button>Comment</button>
-        </div>
-    </div>
+    <?php while ($post = $result->fetch_assoc()): ?>
+        <?php include '../templates/post.php'; ?>
+    <?php endwhile; ?>
 </main>
 
 <?php 
-// Include the footer template
 include '../templates/footer.php'; 
+$conn->close();
 ?>
