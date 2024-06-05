@@ -10,8 +10,8 @@ if (!isset($_SESSION['user_id'])) {
     exit();
 }
 
-// Fetch all posts from the database
-$sql = "SELECT * FROM Posts ORDER BY created_at DESC";
+// Fetch all posts with usernames from the database
+$sql = "SELECT Posts.*, Users.username FROM Posts INNER JOIN Users ON Posts.user_id = Users.user_id ORDER BY Posts.created_at DESC";
 $result = $conn->query($sql);
 ?>
 

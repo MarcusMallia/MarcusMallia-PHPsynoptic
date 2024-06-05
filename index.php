@@ -10,8 +10,8 @@ if (!isset($_SESSION['user_id'])) {
 include 'templates/header.php'; 
 include 'scripts/config.php'; 
 
-// Fetch the latest posts
-$sql = "SELECT * FROM Posts ORDER BY created_at DESC LIMIT 10";
+// Fetch the latest posts with usernames
+$sql = "SELECT Posts.*, Users.username FROM Posts JOIN Users ON Posts.user_id = Users.user_id ORDER BY Posts.created_at DESC LIMIT 10";
 $result = $conn->query($sql);
 ?>
 
@@ -23,6 +23,7 @@ $result = $conn->query($sql);
     <?php while ($post = $result->fetch_assoc()): ?>
         <div class="post">
             <h4><a href="scripts/post_details.php?post_id=<?php echo $post['post_id']; ?>"><?php echo htmlspecialchars($post['title']); ?></a></h4>
+            <p>By <a href="scripts/user_profile.php?user_id=<?php echo $post['user_id']; ?>"><?php echo htmlspecialchars($post['username']); ?></a></p>
             <p><?php echo htmlspecialchars($post['content']); ?></p>
             <?php if (!empty($post['link'])): ?>
                 <p><a href="<?php echo htmlspecialchars($post['link']); ?>" target="_blank">Link</a></p>
