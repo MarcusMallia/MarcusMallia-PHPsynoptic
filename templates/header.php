@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,27 +10,18 @@
     <script src="/MarcusMallia-PHPsynoptic/assets/validation.js" defer></script>
 </head>
 <body>
-    <!-- Header section -->
-    <header>
-        <div class="logo">
-            <h1>SpeakeasySounds</h1>
-        </div>
-        <!-- Navigation menu -->
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="logo">SpeakeasySounds</div>
         <nav>
             <ul>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/index.php"><i class="fas fa-home"></i> Home</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/feed.php"><i class="fas fa-rss"></i> Feed</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/explore.php"><i class="fas fa-search"></i> Explore</a></li>
-                <li><a href="/MarcusMallia-PHPsynoptic/scripts/create_post.php"><i class="fas fa-plus"></i> Create Post</a></li>
                 <li><a href="/MarcusMallia-PHPsynoptic/scripts/notifications.php"><i class="fas fa-bell"></i> Notifications</a></li>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <li><a href="/MarcusMallia-PHPsynoptic/scripts/profile.php"><i class="fas fa-user"></i> Profile</a></li>
-                    <li><a href="/MarcusMallia-PHPsynoptic/scripts/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
-                <?php else: ?>
-                    <li><a href="/MarcusMallia-PHPsynoptic/scripts/login.php"><i class="fas fa-sign-in-alt"></i> Login</a></li>
-                    <li><a href="/MarcusMallia-PHPsynoptic/scripts/signup.php"><i class="fas fa-user-plus"></i> Signup</a></li>
-                <?php endif; ?>
+                <li><a href="/MarcusMallia-PHPsynoptic/scripts/profile.php"><i class="fas fa-user"></i> Profile</a></li>
+                <li><a href="/MarcusMallia-PHPsynoptic/scripts/create_post.php"><i class="fas fa-plus"></i> Create Post</a></li>
+                <li><a href="/MarcusMallia-PHPsynoptic/scripts/logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
             </ul>
         </nav>
-    </header>
-    <main>
+    </div>
