@@ -318,6 +318,21 @@ main {
     background-color: #003580; /* Darker blue on hover */
 }
 
+/*Notification styling*/
+.notification {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.notification.unread {
+    background-color: #f9f9f9;
+}
+
+.notification.read {
+    background-color: #b0b0b0;
+}
+
 /* Ensure the page takes up the full height */
 html, body {
     height: 100%;

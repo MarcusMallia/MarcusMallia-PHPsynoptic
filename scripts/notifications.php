@@ -19,11 +19,11 @@ $result = $conn->query($sql);
 <main>
     <h2>Notifications</h2>
     <?php while ($notification = $result->fetch_assoc()): ?>
-        <div class="notification">
+        <div class="notification <?php echo $notification['is_read'] ? 'read' : 'unread'; ?>">
             <p><?php echo htmlspecialchars($notification['message']); ?></p>
             <p><small><?php echo htmlspecialchars($notification['created_at']); ?></small></p>
             <?php if (!$notification['is_read']): ?>
-                <form action="mark_notification.php" method="post">
+                <form action="update_notification.php" method="post">
                     <input type="hidden" name="notification_id" value="<?php echo $notification['notification_id']; ?>">
                     <button type="submit">Mark as Read</button>
                 </form>
