@@ -24,7 +24,7 @@ if ($result_post->num_rows > 0) {
     $post = $result_post->fetch_assoc();
 } else {
     echo "Post not found or you don't have permission to update this post.";
-    include '../templates/footer.php';
+    include '../templates.footer.php';
     exit();
 }
 
@@ -76,16 +76,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<h2>Update Post</h2>
-<form action="update_post.php?post_id=<?php echo $post_id; ?>" method="post">
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($post['title']); ?>" required><br>
-    <label for="content">Content:</label>
-    <textarea id="content" name="content" required><?php echo htmlspecialchars($post['content']); ?></textarea><br>
-    <label for="link">Link:</label>
-    <input type="text" id="link" name="link" value="<?php echo htmlspecialchars($post['link']); ?>"><br>
-    <label for="tags">Tags (comma separated):</label>
-    <input type="text" id="tags" name="tags" value="<?php echo htmlspecialchars($current_tags); ?>"><br>
-    <input type="submit" value="Update Post">
-</form>
+<main class="main-content">
+    <h2>Update Post</h2>
+    <form action="update_post.php?post_id=<?php echo $post_id; ?>" method="post" class="post-form">
+        <div class="form-group">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="<?php echo htmlspecialchars($post['title']); ?>" required>
+        </div>
+        <div class="form-group">
+            <label for="content">Content:</label>
+            <textarea id="content" name="content" required><?php echo htmlspecialchars($post['content']); ?></textarea>
+        </div>
+        <div class="form-group">
+            <label for="link">Link:</label>
+            <input type="text" id="link" name="link" value="<?php echo htmlspecialchars($post['link']); ?>">
+        </div>
+        <div class="form-group">
+            <label for="tags">Tags (comma separated):</label>
+            <input type="text" id="tags" name="tags" value="<?php echo htmlspecialchars($current_tags); ?>">
+        </div>
+        <button type="submit">Update Post</button>
+    </form>
+</main>
+
 <?php include '../templates/footer.php'; ?>
