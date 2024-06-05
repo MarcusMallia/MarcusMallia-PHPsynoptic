@@ -37,27 +37,32 @@ $sql_posts = "SELECT * FROM Posts WHERE user_id = '$user_id' ORDER BY created_at
 $result_posts = $conn->query($sql_posts);
 ?>
 
-<main>
-    <h2>Profile</h2>
-    <div class="profile-info">
-        <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture" class="profile-picture">
-        <h3><?php echo htmlspecialchars($user['username']); ?></h3>
-        <p><?php echo htmlspecialchars($user['email']); ?></p>
-        <p><?php echo htmlspecialchars($user['bio']); ?></p>
-        <p>Followers: <?php echo $follower_count; ?></p>
-        <p>Following: <?php echo $following_count; ?></p>
-        <p>Posts: <?php echo $post_count; ?></p>
-        <a href="update_user.php"><button>Edit Profile</button></a>
-        <!-- Delete Profile Button -->
-        <form action="delete_user.php" method="post" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
-            <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
-            <button type="submit" class="delete-button">Delete Profile</button>
-        </form>
+<main class="main-content">
+    <div class="profile-header">
+        <div class="profile-picture-container">
+            <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" alt="Profile Picture" class="profile-picture">
+        </div>
+        <div class="profile-info">
+            <h3><?php echo htmlspecialchars($user['username']); ?></h3>
+            <p>@<?php echo htmlspecialchars($user['username']); ?></p>
+            <p><?php echo htmlspecialchars($user['bio']); ?></p>
+            <p>Followers: <?php echo $follower_count; ?> | Following: <?php echo $following_count; ?> | Posts: <?php echo $post_count; ?></p>
+            <a href="update_user.php"><button>Edit Profile</button></a>
+            <!-- Delete Profile Button -->
+            <form action="delete_user.php" method="post" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                <button type="submit" class="delete-button">Delete Profile</button>
+            </form>
+        </div>
     </div>
-    <h2>Your Posts</h2>
-    <?php while ($post = $result_posts->fetch_assoc()): ?>
-        <?php include '../templates/post.php'; ?>
-    <?php endwhile; ?>
+    <div class="profile-posts">
+        <h2>Your Posts</h2>
+        <div class="post-container">
+            <?php while ($post = $result_posts->fetch_assoc()): ?>
+                <?php include '../templates/post.php'; ?>
+            <?php endwhile; ?>
+        </div>
+    </div>
 </main>
 
 <?php 
