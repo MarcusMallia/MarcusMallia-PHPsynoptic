@@ -8,5 +8,9 @@
     <div class="post-actions">
         <button>Like</button>
         <button>Comment</button>
+        <?php if ($_SESSION['user_id'] == $post['user_id']): ?>
+            <a href="update_post.php?post_id=<?php echo $post['post_id']; ?>">Edit</a>
+            <a href="delete_post.php?post_id=<?php echo $post['post_id']; ?>" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
+        <?php endif; ?>
     </div>
 </div>
