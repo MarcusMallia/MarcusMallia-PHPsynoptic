@@ -9,6 +9,11 @@ $sql_likes = "SELECT COUNT(*) as like_count FROM Likes WHERE post_id = '".$post[
 $result_likes = $conn->query($sql_likes);
 $like_count = $result_likes->fetch_assoc()['like_count'];
 
+// Fetch the number of comments for the post
+$sql_comments = "SELECT COUNT(*) as comment_count FROM Comments WHERE post_id = '".$post['post_id']."'";
+$result_comments = $conn->query($sql_comments);
+$comment_count = $result_comments->fetch_assoc()['comment_count'];
+
 // Check if the current user liked the post
 $sql_user_like = "SELECT * FROM Likes WHERE user_id = '".$_SESSION['user_id']."' AND post_id = '".$post['post_id']."'";
 $result_user_like = $conn->query($sql_user_like);
@@ -34,7 +39,8 @@ $is_liked = $result_user_like->num_rows > 0;
             <?php endif; ?>
         </form>
         <span><?php echo $like_count; ?> likes</span>
-        <button>Comment</button>
+        <a href="post_details.php?post_id=<?php echo $post['post_id']; ?>"><button>Comment</button></a>
+        <span><?php echo $comment_count; ?> comments</span>
         <?php if ($_SESSION['user_id'] == $post['user_id']): ?>
             <a href="/MarcusMallia-PHPsynoptic/scripts/update_post.php?post_id=<?php echo $post['post_id']; ?>">Edit</a>
             <a href="/MarcusMallia-PHPsynoptic/scripts/delete_post.php?post_id=<?php echo $post['post_id']; ?>" onclick="return confirm('Are you sure you want to delete this post?');">Delete</a>
